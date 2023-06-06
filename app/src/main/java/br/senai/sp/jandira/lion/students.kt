@@ -1,5 +1,7 @@
 package br.senai.sp.jandira.lion
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,9 +47,9 @@ class students : ComponentActivity() {
 
 @Composable
 fun Greeting2(name: String) {
-    //Text(text = "Hello $name!")
 
 
+    val context = LocalContext.current
     // Estado para controlar a seleção do primeiro Card
     var isCard1Selected by remember { mutableStateOf(false) }
 
@@ -70,9 +73,16 @@ fun Greeting2(name: String) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_arrow),
                 contentDescription = "",
-                tint = Color.White, // Definindo a cor do ícone como branco
-                modifier = Modifier.padding(8.dp) // Adicione um espaçamento interno se necessário
+                tint = Color.White,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clickable {
+                        // Coloque a ação desejada aqui
+                        // Por exemplo, abrir uma nova Activity
+                        toGoBackActivity(context)
+                    }
             )
+
             Spacer(modifier = Modifier.width(280.dp))
             Icon(
                 painter = painterResource(id = R.drawable.baseline_menu),
@@ -147,13 +157,17 @@ fun Greeting2(name: String) {
         }
         Column(
             modifier = Modifier.fillMaxSize()
-                .background(Color.Yellow)
-        ) {
+                .background(Color.Yellow),
+            horizontalAlignment = Alignment.CenterHorizontally,
+
+            ) {
             Card(
                 modifier = Modifier
                     .padding(top = 15.dp)
                     .clip(RoundedCornerShape(20.dp))
-
+                    .clickable {
+                        openActivityStudent(context)
+                    }
 
             ) {
                 Box(
@@ -177,7 +191,7 @@ fun Greeting2(name: String) {
                             text = "Jose Almeida Silva ",
                             color = Color.White,
                             fontSize = 20.sp,
-                            )
+                        )
                     }
                 }
             }
@@ -186,7 +200,9 @@ fun Greeting2(name: String) {
                 modifier = Modifier
                     .padding(top = 15.dp)
                     .clip(RoundedCornerShape(20.dp))
-
+                    .clickable {
+                        openActivityStudent(context)
+                    }
 
             ) {
                 Box(
@@ -229,4 +245,14 @@ fun DefaultPreview2() {
     LionTheme {
         Greeting2("Android")
     }
+}
+
+fun openActivityStudent(context: Context) {
+    val intent = Intent(context, student::class.java)
+    context.startActivity(intent)
+}
+
+fun toGoBackActivity(context: Context) {
+    val intent = Intent(context, MainActivity::class.java)
+    context.startActivity(intent)
 }

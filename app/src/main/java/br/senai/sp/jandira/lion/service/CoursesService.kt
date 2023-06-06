@@ -7,4 +7,6 @@ import retrofit2.http.GET
 interface CoursesService {
         @GET ("cursos")
     fun getCourses(): Call<CoursesList>
+
+
 }

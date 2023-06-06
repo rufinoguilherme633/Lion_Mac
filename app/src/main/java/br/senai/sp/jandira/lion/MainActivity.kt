@@ -1,6 +1,9 @@
 package br.senai.sp.jandira.lion
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -10,7 +13,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,8 +22,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.senai.sp.jandira.lion.ui.theme.LionTheme
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +37,10 @@ import br.senai.sp.jandira.lion.service.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+
+import br.senai.sp.jandira.lion.model.Courses
+import coil.compose.AsyncImage
 
 
 class MainActivity : ComponentActivity() {
@@ -54,27 +64,20 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String) {
     Text(text = "Hello $name!")
 
-    // Inside your MainActivity or another suitable location
-    fun fetchCourses() {
-        val call = RetrofitFactory().getCourses().getCourses()
-
-        call.enqueue(object : Callback<CoursesList> {
-            override fun onResponse(call: Call<CoursesList>, response: Response<CoursesList>) {
-                if (response.isSuccessful) {
-                    val coursesList = response.body()?.cursos
-                    // Process the coursesList here
-                } else {
-                    // Handle unsuccessful response
-                }
-            }
-
-            override fun onFailure(call: Call<CoursesList>, t: Throwable) {
-                // Handle failure
-            }
-        })
+    var cursos by remember {
+        mutableStateOf(listOf<Courses>())
     }
 
+    // Inside your MainActivity or another suitable location
+   // fun fetchCourses() {
 
+    //}
+    // Inside your MainActivity or another suitable location
+
+
+
+
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -135,7 +138,8 @@ fun Greeting(name: String) {
         )
 
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .background(Color.Yellow)
         ) {
             Card(
@@ -143,6 +147,10 @@ fun Greeting(name: String) {
                     .fillMaxWidth()
                     .padding(top = 15.dp)
                     .clip(RoundedCornerShape(90.dp))
+                    .clickable {
+                        openActivity(context)
+                    }
+
             ) {
                 Box(
                     modifier = Modifier
@@ -161,7 +169,7 @@ fun Greeting(name: String) {
                             color = Color.White,
                             fontSize = 20.sp,
 
-                        )
+                            )
                         Image(
                             painter = painterResource(R.drawable.redes),
                             contentDescription = "Descrição da imagem",
@@ -178,6 +186,10 @@ fun Greeting(name: String) {
                     .fillMaxWidth()
                     .padding(top = 8.dp)
                     .clip(RoundedCornerShape(90.dp))
+                    .clickable {
+                        openActivity(context)
+                    }
+
             ) {
                 Box(
                     modifier = Modifier
@@ -207,23 +219,64 @@ fun Greeting(name: String) {
                 }
             }
 
+          //  LazyColumn()
+
         }
 
+        val call = RetrofitFactory().getCourseService().getCourses()
+
+        call.enqueue(object : Callback<CoursesList> {
+            override fun onResponse(call: Call<CoursesList>, response: Response<CoursesList>) {
+
+                val cursos = response.body()!!.cursos
 
 
+            }
+
+            override fun onFailure(call: Call<CoursesList>, t: Throwable) {
+                // Handle failure
+            }
+        })
 
 
-//        LazyColumn {
-//            items(itemsList) { item ->
-//                Card(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(top = 8.dp)
-//                ) {
-//                    // Conteúdo do Card
-//                }
-//            }
-//        }
+        Log.i("ds2m", "${cursos}: ")
+       LazyColumn {
+      items(cursos) {
+
+          Card(
+              modifier = Modifier
+                  .fillMaxWidth()
+                  .padding(top = 8.dp)
+                  .clip(RoundedCornerShape(90.dp))
+                  .clickable {
+                      openActivity(context)
+                  }
+
+          ) {
+              Box(
+                  modifier = Modifier
+                      .background(Color(0xFF3347B0))
+                      .height(120.dp),
+                  contentAlignment = Alignment.Center
+              ) {
+                  Row(
+                      modifier = Modifier
+                          .padding(16.dp)
+
+
+                  ) {
+                      Text(
+                          text = it.sigla,
+                          color = Color.White,
+                          fontSize = 20.sp
+                      )
+                      Spacer(modifier = Modifier.width(16.dp)) // Adicione um espaçador horizontal para separar o texto da imagem
+                      AsyncImage(model = it.icone, contentDescription ="" )
+                  }
+              }
+          }
+      }
+        }
 
     }
 }
@@ -234,4 +287,8 @@ fun DefaultPreview() {
     LionTheme {
         Greeting("Android")
     }
+}
+fun openActivity(context: Context) {
+    val intent = Intent(context, students::class.java)
+    context.startActivity(intent)
 }
