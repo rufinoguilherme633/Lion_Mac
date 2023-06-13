@@ -81,7 +81,6 @@ fun Greeting5(name: String) {
 
                     }
             )
-
             Spacer(modifier = Modifier.width(280.dp))
             Icon(
                 painter = painterResource(id = R.drawable.baseline_menu),
