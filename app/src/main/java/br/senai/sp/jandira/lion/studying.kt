@@ -1,34 +1,31 @@
 package br.senai.sp.jandira.lion
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.senai.sp.jandira.lion.ui.theme.LionTheme
-import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 
 
-class students : ComponentActivity() {
+class studying : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -38,7 +35,7 @@ class students : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting2("Android")
+                    Greeting4("Android")
                 }
             }
         }
@@ -46,9 +43,8 @@ class students : ComponentActivity() {
 }
 
 @Composable
-fun Greeting2(name: String) {
-
-
+fun Greeting4(name: String) {
+   // Text(text = "Hello $name!")
     val context = LocalContext.current
     // Estado para controlar a seleção do primeiro Card
     var isCard1Selected by remember { mutableStateOf(false) }
@@ -79,7 +75,7 @@ fun Greeting2(name: String) {
                     .clickable {
                         // Coloque a ação desejada aqui
                         // Por exemplo, abrir uma nova Activity
-                        toGoBackActivity(context)
+
                     }
             )
 
@@ -117,15 +113,8 @@ fun Greeting2(name: String) {
             )
             {
                 Box(
-                    modifier = Modifier.fillMaxSize()
-                        .clickable {
-                            // Coloque a ação desejada aqui
-                            // Por exemplo, abrir uma nova Activity
-                            toGoStudyng(context)
-                        }
-                    ,
+                    modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
-
                 ) {
                     Text(
                         text = stringResource(R.string.studying),
@@ -151,13 +140,7 @@ fun Greeting2(name: String) {
             )
             {
                 Box(
-                    modifier = Modifier.fillMaxSize()
-                        .clickable {
-                            // Coloque a ação desejada aqui
-                            // Por exemplo, abrir uma nova Activity
-                            toGoFinished(context)
-                        }
-                    ,
+                    modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -185,7 +168,7 @@ fun Greeting2(name: String) {
             ) {
                 Box(
                     modifier = Modifier
-                        .background(Color(0xFF3347B0))
+                        .background(Color(0xFFFFEB57))
                         .height(270.dp),
                     contentAlignment = Alignment.Center
 
@@ -248,35 +231,12 @@ fun Greeting2(name: String) {
 
 
     }
-
-
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview2() {
+fun DefaultPreview4() {
     LionTheme {
-        Greeting2("Android")
+        Greeting4("Android")
     }
-}
-
-fun openActivityStudent(context: Context) {
-    val intent = Intent(context, student::class.java)
-    context.startActivity(intent)
-}
-
-fun toGoBackActivity(context: Context) {
-    val intent = Intent(context, MainActivity::class.java)
-    context.startActivity(intent)
-}
-
-
-fun toGoStudyng(context: Context) {
-    val intent = Intent(context, studying::class.java)
-    context.startActivity(intent)
-}
-
-fun toGoFinished(context: Context) {
-    val intent = Intent(context, Finished::class.java)
-    context.startActivity(intent)
 }

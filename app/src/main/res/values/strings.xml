@@ -6,5 +6,7 @@
     <string name="studying">Studying</string>
     <string name="Finished">Finished</string>
     <string name="title_activity_student">student</string>
+    <string name="title_activity_studying">studying</string>
+    <string name="title_activity_finished">Finished</string>
 
 </resources>

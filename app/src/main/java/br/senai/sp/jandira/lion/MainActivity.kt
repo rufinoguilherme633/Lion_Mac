@@ -68,6 +68,23 @@ fun Greeting(name: String) {
         mutableStateOf(listOf<Courses>())
     }
 
+    val call = RetrofitFactory().getCourseService().getCourses()
+
+    call.enqueue(object : Callback<CoursesList> {
+        override fun onResponse(
+            call: Call<CoursesList>, response: Response<CoursesList>
+        ) {
+
+             cursos = response.body()!!.cursos
+
+
+        }
+
+        override fun onFailure(call: Call<CoursesList>, t: Throwable) {
+            Log.i("ds2m", "nao foi ")
+        }
+    })
+
     // Inside your MainActivity or another suitable location
    // fun fetchCourses() {
 
@@ -140,7 +157,7 @@ fun Greeting(name: String) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Yellow)
+               // .background(Color.Yellow)
         ) {
             Card(
                 modifier = Modifier
@@ -223,23 +240,10 @@ fun Greeting(name: String) {
 
         }
 
-        val call = RetrofitFactory().getCourseService().getCourses()
-
-        call.enqueue(object : Callback<CoursesList> {
-            override fun onResponse(call: Call<CoursesList>, response: Response<CoursesList>) {
-
-                val cursos = response.body()!!.cursos
 
 
-            }
 
-            override fun onFailure(call: Call<CoursesList>, t: Throwable) {
-                // Handle failure
-            }
-        })
-
-
-        Log.i("ds2m", "${cursos}: ")
+       // Log.i("ds2m", "${cursos}: ")
        LazyColumn {
       items(cursos) {
 

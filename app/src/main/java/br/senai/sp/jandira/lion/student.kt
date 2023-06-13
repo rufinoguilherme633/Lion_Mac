@@ -149,7 +149,9 @@ fun Greeting3(name: String) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(color = Color(0xFF3347B0)),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+
+
                 ) {
                     Card(
                         modifier = Modifier
@@ -161,7 +163,8 @@ fun Greeting3(name: String) {
                                 .background(Color(0xFFE5B657))
                                 .height(270.dp)
                                 .width(350.dp),
-                            contentAlignment = Alignment.Center
+                            contentAlignment = Alignment.Center,
+
                         ) {
 
                             Box(
