@@ -1,5 +1,7 @@
 package br.senai.sp.jandira.lion
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -75,7 +77,7 @@ fun Greeting4(name: String) {
                     .clickable {
                         // Coloque a ação desejada aqui
                         // Por exemplo, abrir uma nova Activity
-
+toStudyngtoGoBackActivity(context)
                     }
             )
 
@@ -140,7 +142,11 @@ fun Greeting4(name: String) {
             )
             {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .clickable {
+                            toStudyngtoGoFinished(context)
+                        }
+                    ,
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -239,4 +245,13 @@ fun DefaultPreview4() {
     LionTheme {
         Greeting4("Android")
     }
+}
+fun toStudyngtoGoBackActivity(context: Context) {
+    val intent = Intent(context, students::class.java)
+    context.startActivity(intent)
+}
+
+fun toStudyngtoGoFinished(context: Context) {
+    val intent = Intent(context, Finished::class.java)
+    context.startActivity(intent)
 }

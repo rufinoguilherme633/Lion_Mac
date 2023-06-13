@@ -77,6 +77,7 @@ fun Greeting5(name: String) {
                     .clickable {
                         // Coloque a ação desejada aqui
                         // Por exemplo, abrir uma nova Activity
+                        toFinishedtoGoBackActivity(context)
 
                     }
             )
@@ -115,7 +116,10 @@ fun Greeting5(name: String) {
             )
             {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .clickable {
+                            toFinishedtoGoStudyng(context)
+                        },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -144,7 +148,8 @@ fun Greeting5(name: String) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
-                ) {
+                )
+                {
                     Text(
                         text = stringResource(id = R.string.Finished),
                         color = Color.White,
@@ -243,3 +248,12 @@ fun DefaultPreview5() {
     }
 }
 
+fun toFinishedtoGoBackActivity(context: Context) {
+    val intent = Intent(context, students::class.java)
+    context.startActivity(intent)
+}
+
+fun toFinishedtoGoStudyng(context: Context) {
+    val intent = Intent(context, studying::class.java)
+    context.startActivity(intent)
+}
